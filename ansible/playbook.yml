@@ -4,8 +4,6 @@
     become: yes
 
     tasks:
-      - name: Update repository
-        shell: yum -y update
 
       - name: Ensure epel repo present
         yum:
