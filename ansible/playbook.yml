@@ -1,10 +1,10 @@
 ---
-  - name:  install default Nginx Web Server
+  - name:  Install default Nginx Web Server
     hosts: all
     become: yes
 
     tasks:
-      - name: update repository
+      - name: Update repository
         shell: yum -y update
 
       - name: Ensure epel repo present
@@ -12,7 +12,7 @@
           name: https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
           state: present
 
-      - name: install Nginx Web Server
+      - name: Install Nginx Web Server
         become: yes
         yum:
           name: nginx
@@ -28,6 +28,6 @@
             dest: /etc/nginx/sites-enabled/000-default.conf
             mode: 0755
 
-      - name: restart nginx
+      - name: Restart nginx
         become: yes
         shell: systemctl restart nginx
