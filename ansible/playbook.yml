@@ -17,14 +17,17 @@
           state: latest
 
       - name: Create target directory
-        file: path=/etc/nginx/sites-enabled state=directory mode=0755
+        file:
+          path: /etc/nginx/sites-enabled
+          state: directory
+          mode: 0755
 
       - name: "Copy Nginx config"
         become: yes
         copy:
-            src: ./sites-enabled/000-default.conf
-            dest: /etc/nginx/sites-enabled/000-default.conf
-            mode: 0755
+          src: ./sites-enabled/000-default.conf
+          dest: /etc/nginx/sites-enabled/000-default.conf
+          mode: 0755
 
       - name: Restart nginx
         become: yes
