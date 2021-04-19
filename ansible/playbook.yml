@@ -5,7 +5,7 @@
 
     tasks:
 
-      - name: Ensure epel repo present
+      - name: Add Epel repo for ngunx install
         yum:
           name: https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
           state: present
