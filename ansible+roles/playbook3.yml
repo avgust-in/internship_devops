@@ -1,0 +1,7 @@
+---
+  - name:  Install default Nginx Web Server
+    hosts: all
+    become: yes
+
+    roles:
+      - deploy_nginx_web

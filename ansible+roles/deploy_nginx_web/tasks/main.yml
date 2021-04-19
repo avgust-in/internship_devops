@@ -1,0 +1,26 @@
+---
+# tasks file for deploy_nginx_web
+- name: Add Epel repo for Nginx install
+  yum:
+    name: https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+    state: present
+
+- name: Install Nginx Web Server
+  become: yes
+  yum:
+    name: nginx
+    state: latest
+
+- name: Create target directory
+  file:
+    path: /etc/nginx/sites-enabled
+    state: directory
+    mode: 0755
+
+- name: "Copy Nginx config"
+  become: yes
+  copy:
+    src: 000-default.conf
+    dest: "{{ destin_file }}"
+    mode: 0755
+  notify: Restart nginx
