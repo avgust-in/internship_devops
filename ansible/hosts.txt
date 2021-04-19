@@ -1,0 +1,2 @@
+[stage_server_avgust]
+linux1 ansible_host=3.143.204.107

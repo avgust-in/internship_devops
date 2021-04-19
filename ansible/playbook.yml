@@ -1,0 +1,33 @@
+---
+  - name:  install default Nginx Web Server
+    hosts: all
+    become: yes
+
+    tasks:
+      - name: update repository
+        shell: yum -y update
+
+      - name: Ensure epel repo present
+        yum:
+          name: https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+          state: present
+
+      - name: install Nginx Web Server
+        become: yes
+        yum:
+          name: nginx
+          state: latest
+
+      - name: Create target directory
+        file: path=/etc/nginx/sites-enabled state=directory mode=0755
+
+      - name: "Copy Nginx config"
+        become: yes
+        copy:
+            src: ./sites-enabled/000-default.conf
+            dest: /etc/nginx/sites-enabled/000-default.conf
+            mode: 0755
+
+      - name: restart nginx
+        become: yes
+        shell: systemctl restart nginx
