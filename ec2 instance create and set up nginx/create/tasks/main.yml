@@ -1,6 +1,6 @@
 ---
 # tasks file for create
-  - name: Provision VPC with a given name
+  - name: create VPC with a given name
     ec2_vpc_net:
       region: "{{ region }}"
       name: "{{ vpc_name }}"
@@ -46,7 +46,7 @@
     register: avg_security_group
 
 
-  - name: Provision a set of instances
+  - name: create instances
     ec2:
      region: "{{ region }}"
      group: "{{ security_group_name }}"
