@@ -1,0 +1,9 @@
+---
+# handlers file for deploy_nginx_web
+- name: Restart nginx
+  become: yes
+  shell: systemctl restart nginx
+
+- name: Restart nginx
+  become: yes
+  shell: yum update-cache

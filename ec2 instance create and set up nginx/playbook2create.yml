@@ -1,0 +1,9 @@
+---
+- name: create instances and deploy Nginx
+  hosts: localhost
+  connection: local
+  gather_facts: False
+
+  roles:
+        - create
+#        - deploy_nginx_web

@@ -1,0 +1,25 @@
+---
+#set project name:
+prod_name: 'AVG_prod'
+
+vpc_name: "{{ prod_name }} VPC"
+igw_name: "{{ prod_name }} IGW"
+subnet_name: "{{ prod_name }} Subnet"
+security_group_name: "{{ prod_name }} Security Group"
+ec2_name: "{{ prod_name }} EC2"
+
+
+#set vars:
+
+region: 'us-east-2'
+az: 'us-east-2a'
+state: 'present'
+
+VPC_cidr_block: '10.0.0.0/16'
+subnet_cidr: '10.0.1.0/24'
+sg_cidr_ip: '0.0.0.0/0'
+# set instance vars:
+EC2_instance_type: 't2.micro'
+#EC2_image: 'ami-08962a4068733a2b6' #ubuntu 20.04
+EC2_image: 'ami-01e7ca2ef94a0ae86' #ubuntu 18.04
+quantity_instanses: '1'
