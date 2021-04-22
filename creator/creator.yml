@@ -1,0 +1,69 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: False
+
+  tasks:
+
+      - name: Provision VPC with a given name
+        ec2_vpc_net:
+          region: us-east-2
+          name: AVG_test
+          cidr_block: 10.0.0.0/16
+        register: ec2_vpc
+
+      - name: create ec2 vpc internet gateway
+    # create an internet gateway for the vpc
+        ec2_vpc_igw:
+           vpc_id: "{{ ec2_vpc.vpc.id }}"
+           region: us-east-2
+           state: present
+           tags:
+             Name: AVG_test
+        register: igw_result
+
+      - name: create ec2 vpc subnet
+        ec2_vpc_subnet:
+          vpc_id: "{{ ec2_vpc.vpc.id }}"
+          region: us-east-2
+          az: us-east-2a
+          state: present
+          cidr: 10.0.1.0/24
+          map_public: yes
+          resource_tags:
+            Name: AVG_test
+        register: subnet_result
+
+      - name: create ec2 security group
+    # create a security group for the vpc
+        ec2_group:
+          vpc_id: "{{ ec2_vpc.vpc.id }}"
+          region: us-east-2
+          state: present
+          name: AVG_test
+          description: AVG_test
+          tags:
+            Name: AVG_test
+          rules:
+          - proto: tcp
+            ports:
+            - 22
+            cidr_ip: 0.0.0.0/0
+            rule_desc: allow all on port 22
+        register: avg_security_group
+
+
+      - name: Provision a set of instances
+        ec2:
+         region: us-east-2
+         group: AVG_test
+         instance_type: t2.micro
+         image: ami-08962a4068733a2b6
+         vpc_subnet_id: subnet-0c8902ab660a2ea9f
+         wait: true
+         exact_count: 1
+         count_tag:
+             Name: AVG_ec2
+         instance_tags:
+             Name: AVG_ec2
+        register: ec2
