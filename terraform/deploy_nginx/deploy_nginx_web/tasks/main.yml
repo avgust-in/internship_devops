@@ -1,0 +1,15 @@
+---
+# tasks file for deploy_nginx_web
+- name: Install Nginx Web Server
+  become: yes
+  apt:
+    name: nginx
+    state: latest
+
+- name: "Copy Nginx config"
+  become: yes
+  copy:
+    src: default
+    dest: "{{ destin_file }}/default"
+    mode: 0755
+  notify: Restart nginx

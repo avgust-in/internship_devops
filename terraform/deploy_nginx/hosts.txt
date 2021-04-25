@@ -1,0 +1,2 @@
+[stage_server_avgust]
+ 18.218.18.209
