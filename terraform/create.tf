@@ -109,10 +109,9 @@ resource "local_file" "AVG_Ubuntu" {
   content  = "[stage_server_avgust]\n ${aws_instance.AVG_Ubuntu.public_ip}"
   filename = "./deploy_nginx/hosts.txt"
 }
-
+# make playbook
 resource "null_resource" "AVG_Ubuntu" {
   triggers = {
-    #  cluster_instance_ids = join(",", aws_instance.AVG_Ubuntu.id)
     content = "${local_file.AVG_Ubuntu.content}"
   }
   provisioner "local-exec" {
