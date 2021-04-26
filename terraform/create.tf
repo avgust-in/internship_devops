@@ -129,12 +129,19 @@ resource "aws_s3_bucket" "AVG_Ubuntu_bucket" {
     Environment = "Dev"
   }
 }
-# Upload an object
-resource "aws_s3_bucket_object" "AVG_Ubuntu_object" {
 
-  bucket = aws_s3_bucket.AVG_Ubuntu_bucket.id
-  key    = "AVG/tf+ansbl-create_ec2+nginx/terraform.tfstate"
-  acl    = "private" # or can be "public-read"
-  source = "terraform.tfstate"
-  etag   = filemd5("terraform.tfstate")
+# Lookup to servet state
+terraform {
+  backend "s3" {
+    bucket  = "avg-server-state"
+    key     = "AVG/create_ec2+nginx/terraform.tfstate"
+    region  = "us-east-2"
+    encrypt = true
+  }
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 3.0"
+    }
+  }
 }
