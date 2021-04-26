@@ -130,7 +130,7 @@ resource "aws_s3_bucket" "AVG_Ubuntu_bucket" {
   }
 }
 
-# Lookup to servet state
+# Lookup to server state
 terraform {
   backend "s3" {
     bucket  = "avg-server-state"
