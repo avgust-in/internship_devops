@@ -1,0 +1,2 @@
+[stage_server_avgust]
+ 3.12.162.103
